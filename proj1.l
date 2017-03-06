@@ -3,21 +3,20 @@
 %option noyywrap
 
 %{
-int chars = 0;
-int words = 0;
-int lines = 0;
+int isANumber = 0;
 %}
 
 %%
 
-[a-zA-Z]+ { words++; chars += strlen(yytext); }
-\n        { chars++; lines++; }
-.         { chars++; }
+[0] | [0-9]+ { isANumber = 1 }
 
 %%
 
-main()
+int main()
 {
   yylex();
-  printf("%8d%8d%8d\n", lines, words, chars);
+  if(isANumber==1)
+    printf("is a number");
+  else
+    printf("is not a number");
 }

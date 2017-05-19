@@ -1,17 +1,15 @@
 /* This compiler does not fulfill project requirements */
 
 %{
-
 #include <stdio.h>
 #include <stdlib.h>
-
 
 #define SYMTABSIZE		50
 #define IDLENGTH		15
 #define NOTHING			-1
-#define INDENTOFFSET	2
+#define INDENTOFFSET		2
 
-	enum ParseTreeNodeType {PROGRAM, STATEMENTS, STATEMENT, IF_STATEMENT, WHILE_STATEMENT, ASSIGNMENT_STATEMENT,
+enum ParseTreeNodeType {PROGRAM, STATEMENTS, STATEMENT, IF_STATEMENT, WHILE_STATEMENT, ASSIGNMENT_STATEMENT,
 							CONDITION, RELOP, EXPR, BINARYOP, NUMBER_VALUE, ID_VALUE};
 
 char *NodeName[] = {"PROGRAM", "STATEMENTS", "STATEMENT", "IF_STATEMENT", "WHILE_STATEMENT", "ASSIGNMENT_STATEMENT",
@@ -68,9 +66,9 @@ int currentSymTabSize = 0;
 	TERNARY_TREE tVal;
 }
 
-%token 	SEMICOLON ASSIGNMENT LESS_THAN GREATER_THAN PLUS MINUS BEGIN END IF THEN ELSE WHILE DO
+%token 		SEMICOLON ASSIGNMENT LESS_THAN GREATER_THAN PLUS MINUS BEGIN END IF THEN ELSE WHILE DO
 %token<iVal>	ID NUMBER
-%type<tVal> program statements statement if_statement while_statement assignment_statement
+%type<tVal> 	program statements statement if_statement while_statement assignment_statement
 			condition relop expr binaryOp value
 
 %%

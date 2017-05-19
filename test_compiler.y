@@ -45,6 +45,7 @@ void PrintTree(TERNARY_TREE, int);
 #endif
 void WriteCode(TERNARY_TREE);
 
+/* Symbol Table */
 struct symTabNode
 {
 	char identifier[IDLENGTH];
@@ -66,6 +67,7 @@ int currentSymTabSize = 0;
 	TERNARY_TREE tVal;
 }
 
+/* Declare tokens */
 %token 		SEMICOLON ASSIGNMENT LESS_THAN GREATER_THAN PLUS MINUS BEGIN END IF THEN ELSE WHILE DO
 %token<iVal>	ID NUMBER
 %type<tVal> 	program statements statement if_statement while_statement assignment_statement
@@ -123,6 +125,7 @@ value : NUMBER {$$ = create_node($1, NUMBER_VALUE, NULL, NULL, NULL);}
 		
 %%
 
+/* Parse Tree */
 TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY_TREE p2, TERNARY_TREE p3)
 {
 	TERNARY_TREE t;
@@ -136,6 +139,8 @@ TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY
 }
 
 #ifdef DEBUG
+
+/* Print Parse Tree */
 void PrintTree(TERNARY_TREE t, int indent)
 {
 	int i;
@@ -164,6 +169,7 @@ void PrintTree(TERNARY_TREE t, int indent)
 }
 #endif
 
+/* Code Generator */
 void WriteCode(TERNARY_TREE t)
 {
 	if(t == NULL)

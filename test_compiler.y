@@ -10,10 +10,10 @@
 #define INDENTOFFSET		2
 
 enum ParseTreeNodeType {PROGRAM, STATEMENTS, STATEMENT, IF_STATEMENT, WHILE_STATEMENT, ASSIGNMENT_STATEMENT,
-							CONDITION, RELOP, EXPR, BINARYOP, NUMBER_VALUE, ID_VALUE};
+			CONDITION, RELOP, EXPR, BINARYOP, NUMBER_VALUE, ID_VALUE};
 
 char *NodeName[] = {"PROGRAM", "STATEMENTS", "STATEMENT", "IF_STATEMENT", "WHILE_STATEMENT", "ASSIGNMENT_STATEMENT",
-					"CONDITION", "RELOP", "EXPR", "BINARYOP", "NUMBER_VALUE", "ID_VALUE"};
+		    "CONDITION", "RELOP", "EXPR", "BINARYOP", "NUMBER_VALUE", "ID_VALUE"};
 							
 #ifndef TRUE
 #define TRUE 1
@@ -69,48 +69,57 @@ int currentSymTabSize = 0;
 %token 		SEMICOLON ASSIGNMENT LESS_THAN GREATER_THAN PLUS MINUS BEGIN END IF THEN ELSE WHILE DO
 %token<iVal>	ID NUMBER
 %type<tVal> 	program statements statement if_statement while_statement assignment_statement
-			condition relop expr binaryOp value
+		condition relop expr binaryOp value
 
 %%
 
 program : BEGIN statements END
-			{ 
-				TERNARY_TREE ParseTree;
-				ParseTree = create_node(NOTHING, PROGRAM, $2, NULL, NULL);
-				#ifdef DEBUG
-				PrintTree(ParseTree, 0);
-				#endif
-				WriteCode(ParseTree);
-			}
-			;
+{ 
+	TERNARY_TREE ParseTree;
+	ParseTree = create_node(NOTHING, PROGRAM, $2, NULL, NULL);
+	#ifdef DEBUG
+	PrintTree(ParseTree, 0);
+	#endif
+	WriteCode(ParseTree);
+}
+;
+			
 statements : statement {$$ = create_node(NOTHING, STATEMENTS, $1, NULL, NULL);}
-			 | statement SEMICOLON statements {$$ = create_node(NOTHING, STATEMENTS, $1, $3, NULL);}
-			 ;
+| statement SEMICOLON statements {$$ = create_node(NOTHING, STATEMENTS, $1, $3, NULL);}
+;
+ 
 statement : if_statement {$$ = create_node(NOTHING, STATEMENTS, $1, NULL, NULL);}
-			| while_statement {$$ = create_node(NOTHING, STATEMENTS, $1, NULL, NULL);}
-			| assignment_statement {$$ = create_node(NOTHING, STATEMENTS, $1, NULL, NULL);}
-			| program {$$ = create_node(NOTHING, STATEMENTS, $1, NULL, NULL);}
-			;	 
+| while_statement {$$ = create_node(NOTHING, STATEMENTS, $1, NULL, NULL);}
+| assignment_statement {$$ = create_node(NOTHING, STATEMENTS, $1, NULL, NULL);}
+| program {$$ = create_node(NOTHING, STATEMENTS, $1, NULL, NULL);}
+;
+ 
 if_statement : IF condition THEN statement {$$ = create_node(NOTHING, IF_STATEMENT, $2, $4, NULL);}
-			 ;
+;
+
 while_statement : WHILE condition DO statement {$$ = create_node(NOTHING, WHILE_STATEMENT, $2, $4, NULL);}
-				;
+;
+
 assignment_statement : ID ASSIGNMENT expr {$$ = create_node($1, ASSIGNMENT_STATEMENT, $3, NULL, NULL);}
-					 ;
+;
+
 condition : expr relop expr {$$ = create_node(NOTHING, CONDITION, $1, $2, $3);}
 
 relop : LESS_THAN {$$ = create_node(LESS_THAN, RELOP, NULL, NULL, NULL);}
-		 | GREATER_THAN {$$ = create_node(GREATER_THAN, RELOP, NULL, NULL, NULL);}
-		 ; 
+| GREATER_THAN {$$ = create_node(GREATER_THAN, RELOP, NULL, NULL, NULL);}
+; 
+
 expr : value binaryOp expr {$$ = create_node(NOTHING, EXPR, $1, $2, $3);}
-	   | value {$$ = create_node(NOTHING, EXPR, $1, NULL, NULL);}
-	   ;
+| value {$$ = create_node(NOTHING, EXPR, $1, NULL, NULL);}
+;
+
 binaryOp : PLUS {$$ = create_node(PLUS, BINARYOP, NULL, NULL, NULL);}
-		   | MINUS {$$ = create_node(MINUS, BINARYOP, NULL, NULL, NULL);}
-		   ;   
+| MINUS {$$ = create_node(MINUS, BINARYOP, NULL, NULL, NULL);}
+;   
+
 value : NUMBER {$$ = create_node($1, NUMBER_VALUE, NULL, NULL, NULL);}
-		| ID {$$ = create_node($1, ID_VALUE, NULL, NULL, NULL);}
-		;
+| ID {$$ = create_node($1, ID_VALUE, NULL, NULL, NULL);}
+;
 		
 %%
 

@@ -17,29 +17,29 @@ extern int currentSymTabSize;
 #endif
 %}
 
-delim	[ \r\n\t]
+delim		[ \r\n\t]
 ws		{delim}*
-digit	[0-9]
-letter	[a-zA-Z]
-number	{digit}+
+digit		[0-9]
+letter		[a-zA-Z]
+number		{digit}+
 id		{letter}({letter}|{digit})*
 %%
-{ws}	; /* skip space */
+{ws}		; /* skip space */
 ";"		TOKEN(SEMICOLON)
 "="		TOKEN(ASSIGNMENT)
 "<"		TOKEN(LESS_THAN)
 ">"		TOKEN(GREATER_THAN)
 "+"		TOKEN(PLUS)
 "-"		TOKEN(MINUS)
-begin	TOKEN(BEGIN)
+begin		TOKEN(BEGIN)
 end		TOKEN(END)
 if		TOKEN(IF)
-then	TOKEN(THEN)
-else	TOKEN(ELSE)
-while	TOKEN(WHILE)
+then		TOKEN(THEN)
+else		TOKEN(ELSE)
+while		TOKEN(WHILE)
 do		TOKEN(DO)
-{id}	ID_TOKEN(ID)
-{number} NUMBER_TOKEN(NUMBER)
+{id}		ID_TOKEN(ID)
+{number} 	NUMBER_TOKEN(NUMBER)
 .		printf("Error: Unexpected symbol in lexical analyzer %s (%d)\n", yytext, yytext[0]);
 %%
 

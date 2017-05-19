@@ -23,6 +23,7 @@ digit		[0-9]
 letter		[a-zA-Z]
 number		{digit}+
 id		{letter}({letter}|{digit})*
+
 %%
 {ws}		; /* skip space */
 ";"		TOKEN(SEMICOLON)
@@ -41,8 +42,8 @@ do		TOKEN(DO)
 {id}		ID_TOKEN(ID)
 {number} 	NUMBER_TOKEN(NUMBER)
 .		printf("Error: Unexpected symbol in lexical analyzer %s (%d)\n", yytext, yytext[0]);
-%%
 
+%%
 #ifndef PRINT
 
 SYMTABNODEPTR newSymTabNode()

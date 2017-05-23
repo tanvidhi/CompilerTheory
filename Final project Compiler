@@ -1,4 +1,3 @@
-
 /* Kao Vue, Roland Bernard, Tanvi Gandhi, Edgardo Quevada
  * Final project, stubbRule's are for testing the output.
  * The numbering system on the stubb is A.B or A.B.C
@@ -7,9 +6,9 @@
  * After extensive testing we will remove the "stubbRule:x.x.x" out of the
  * program and turn in the assignment.
  */
+/* There are 10 sections of code that need to be generated in flex/C or C++ in order to complete this assignment successfully. Some of them may be overlapping a little bit. However, in most cases, they each correspond to the comments below:
  
-/* There are 6 sections of code in the flex code. They each correspond to the comments below:
-   problem 1. (1-2) write a driver program and skeletal symbol table class. The driver should print the address in hexadecimal where the variable name was found or stored.
+   problem 1. Write a driver program and skeletal symbol table class. The driver should print the address in hexadecimal where the variable name was found or stored.
  
    problem 2.Design and write the error-handling routines. The error-handler should print the line number, the error diagnostics and keep track of the maximum severity encountered in the compilation. Severity levels should include warning, error, and fatal errors.
    
@@ -25,14 +24,22 @@
  .y}}}}}}}}}}
 
    
-   problem 4. Write a skeletal initialization code, which performs any initialization required by our symbol table parkage[[[[[
+   problem 4. Write a skeletal initialization code, which performs any initialization required by our symbol table parkage. This code will be able to locates and opens the source file and derives the object file name. 
+ Int:  Use the old C I/O functions (fopen() etc.) in <cstdio>, since flex will require the input to be a FILE.
+
+   
+ problem 5. Organization of the symbol table; to a true symbol-table class, organized via hashing to linked lists. Each symbol table record contains the name of the symbol and a kind field, which differentiates the different kinds of things in the table: keywords (CIN, COUT, ELSE, ENDL, FLOAT, IF, INT, RETURN, and WHILE), variable and names, numeric constant: ( ) [ ] { } ).
+
+ (Make these #define symbols, like #define WHILE 7, because the numeric values will eventually be generated automatically by bison.). Maintain an array of linked lists of a size given by a manifest constant, and a hashing algorithm to spread names among the lists as uniformly as possible. As in (1), provide a method to search the symbol table for a given name, create a new entry for that name if none is present, and in either case return a pointer to the record for that name.
  
-   If there is exactly two digits, they may both be zeros. 
-   Otherwise no leading zero after initial zero.
-   
-   problem 5. Starts with 0x or 0X followed by hex digits. 
-   No leading zeros after 0x but can be 0x0. */
-   
+ Problem 6. We will write the lexical analyzer, using flex. Count lines for use by the error handler. We will also design our lexical analyzer to be a function called by the parser, returning a token and, when necessary, an attribute value. Errors detected by your lexical analyzer should be routed through the error-handling routines described above.
+ 
+ Problem 7. We have to integrate the symbol table with the lexical analyzer. That way, we can have the lexical analyzer lookup all numbers and symbols, insert new ones, and return appropriate tokens for identifiers, numbers, and keywords.
+ 
+ Problem 8. After we get the parser up and ready, we will move it to a new version that works with the lexical analyzer. This will be the major component of the compiler. It will be written incrementally; this target completion date refers to a version that does nothing but check syntax and and rec- ognize correct programs. This initial version needs to be integrated with the lexical analyzer to recognize tokens, but does not yet do any semantics.
+ 
+ Problem 9-10.After we get everyting works in a small scale, we will increase the parser, symbol table, and lexical analyzer to recognize block structure and scope. This will involves implementing semantic routines for declaration statements, including any function definitions. We will increase the parser using semantic routines to generate the quadruples. If possible, we will do some semantic analysis such as checking at this time, converting intergers to reals when necessary.
+ */
 %option noyywrap
 
 %%
